@@ -39,15 +39,22 @@ builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehav
 
 
 
-
 var app = builder.Build();
 
+// Make Sure Database Created
+using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
+{
+    var context = serviceScope?.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context?.Database.EnsureCreated();
+}
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Docker"))
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
