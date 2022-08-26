@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Src/02.Infrastructures/DataLayer.SqlServer/Migrations
+/.idea/.idea.Rayankar-InterviewTest/.idea
